@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Kaffee des Tages</title>
+<meta name="description" content="Jeden Tag ein neues Kaffeerezept von LeNoKo" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#F6EFE2" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F6EFE2;
+    --surface: #FFFFFF;
+    --surface-2: #FBF6EC;
+    --line: #E7DCC5;
+    --ink: #2E2013;
+    --ink-muted: #8A7864;
+    --accent: #B5652D;
+    --badge-bg: #3B2A1F;
+    --badge-text: #F6EFE2;
+    --tip-bg: #F1E7D3;
+    --heart: #B5442E;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); min-height:100dvh; font-family:'Work Sans', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  body { display:flex; flex-direction:column; }
+
+  header.app-header { display:flex; align-items:center; justify-content:space-between; padding: 18px 20px 8px; max-width: 480px; width:100%; margin:0 auto; }
+  header.app-header .brand { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-muted); font-weight:600; }
+  header.app-header .brand b { color:var(--accent); }
+
+  main { flex:1; width:100%; max-width:480px; margin:0 auto; padding: 6px 16px 100px; }
+
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow: 0 18px 40px -24px rgba(46,32,19,0.35); margin-bottom:16px; }
+
+  .hero { position:relative; aspect-ratio: 4 / 3; background: linear-gradient(135deg, #EFDFC4, #DEBF95); display:flex; align-items:center; justify-content:center; }
+  .hero img { width: 42%; max-width:170px; opacity:0.92; }
+  .hero img.is-photo { width:100%; height:100%; max-width:none; object-fit:cover; opacity:1; }
+  .badge { position:absolute; top:14px; left:14px; background:var(--badge-bg); color:var(--badge-text); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:7px 12px; border-radius:999px; }
+
+  .body { padding: 18px 20px 22px; }
+
+  h1 { font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:26px; line-height:1.1; margin: 0 0 6px; }
+  .category { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin:0 0 6px; }
+  .alcohol-tag { display:inline-block; font-size:11px; font-weight:600; color:#8A3B1E; background:#F3DCC9; padding:4px 10px; border-radius:999px; margin: 0 0 14px; }
+  .subtitle { font-size:13.5px; color:var(--ink-muted); margin: 0 0 16px; }
+
+  .stats { display:flex; gap:18px; padding: 12px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:18px; }
+  .stat { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink); }
+  .stat .e { font-size:14px; }
+
+  .section-title { display:flex; align-items:center; gap:8px; font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:15px; margin: 0 0 10px; letter-spacing:0.01em; }
+  .section-title .e { font-size:16px; }
+
+  .ingredients { list-style:none; margin:0 0 20px; padding:0; }
+  .ingredients li { display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .ingredients li:last-child { border-bottom:none; }
+  .ingredients .amount { color:var(--ink-muted); font-weight:500; white-space:nowrap; }
+
+  .steps { list-style:none; margin:0 0 20px; padding:0; counter-reset: step; }
+  .steps li { display:flex; gap:12px; margin-bottom:12px; font-size:14px; line-height:1.5; }
+  .steps li:last-child { margin-bottom:0; }
+  .steps .num { flex-shrink:0; width:24px; height:24px; border-radius:50%; background:var(--badge-bg); color:var(--badge-text); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+  .tip-box { display:flex; gap:12px; background:var(--tip-bg); border-radius:14px; padding:14px 16px; margin-bottom:18px; }
+  .tip-box .e { font-size:20px; line-height:1; }
+  .tip-box .txt b { display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; color:var(--ink); }
+  .tip-box .txt p { margin:0; font-size:13.5px; color:var(--ink-muted); line-height:1.5; }
+
+  .shop-link { display:flex; align-items:center; justify-content:space-between; gap:10px; text-decoration:none; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:18px; }
+  .shop-link .txt { font-size:13.5px; color:var(--ink); font-weight:500; }
+  .shop-link small { display:block; color:var(--ink-muted); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; margin-top:2px; font-weight:400; }
+  .shop-link .arrow { color:var(--accent); font-size:16px; }
+
+  .actions { display:flex; gap:10px; }
+  .btn { flex:1; display:flex; align-items:center; justify-content:center; gap:7px; font-size:13px; font-weight:600; padding:12px 10px; border-radius:12px; border:1px solid var(--line); background:var(--surface-2); color:var(--ink); cursor:pointer; }
+  .btn:active { transform:scale(0.98); }
+  .btn.fav.active { background: rgba(181,68,46,0.1); border-color:var(--heart); color:var(--heart); }
+
+  .search-box { display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding: 11px 14px; margin-bottom:16px; }
+  .search-box input { flex:1; background:transparent; border:none; outline:none; color:var(--ink); font-family:'Work Sans'; font-size:14px; }
+  .search-box input::placeholder { color: var(--ink-muted); }
+
+  .list-item { display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding: 10px 12px; margin-bottom:10px; cursor:pointer; }
+  .list-item .thumb { width:48px; height:48px; border-radius:10px; background: linear-gradient(135deg, #EFDFC4, #DEBF95); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .list-item .thumb img { width:28px; height:28px; }
+  .list-item .meta { flex:1; min-width:0; }
+  .list-item .meta .name { font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:15px; margin-bottom:2px; }
+  .list-item .meta .method { font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-muted); }
+  .list-item .heart { flex-shrink:0; background:none; border:none; font-size:18px; cursor:pointer; color: var(--ink-muted); }
+  .list-item .heart.active { color: var(--heart); }
+
+  .empty { text-align:center; color:var(--ink-muted); font-family:'Fraunces', Georgia, serif; font-style:italic; font-size:15px; padding: 40px 20px; }
+
+  nav.tabbar { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:center; background: rgba(246,239,226,0.94); backdrop-filter: blur(10px); border-top:1px solid var(--line); padding: 8px max(12px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)); }
+  nav.tabbar .inner { display:flex; width:100%; max-width:480px; justify-content:space-around; }
+  nav.tabbar button { background:none; border:none; color:var(--ink-muted); font-size:10.5px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; display:flex; flex-direction:column; align-items:center; gap:4px; padding:6px 14px; cursor:pointer; }
+  nav.tabbar button .emoji { font-size:18px; }
+  nav.tabbar button.active { color: var(--accent); }
+
+  [hidden] { display:none !important; }
+  .toast { position:fixed; left:50%; bottom:90px; transform:translateX(-50%) translateY(20px); background: var(--badge-bg); color:var(--badge-text); font-size:12px; font-weight:600; padding:10px 16px; border-radius:999px; opacity:0; transition: opacity 0.25s ease, transform 0.25s ease; pointer-events:none; z-index:20; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <span class="brand">Kaffee des Tages · <b>LeNoKo</b></span>
+</header>
+
+<main>
+
+  <section id="view-heute">
+    <div class="card">
+      <div class="hero">
+        <span class="badge">Rezept des Tages</span>
+        <img id="illustration" src="" alt="" />
+      </div>
+      <div class="body">
+        <p class="category" id="category">–</p>
+        <h1 id="title">Kaffee wird gebrüht …</h1>
+        <p class="subtitle" id="subtitle">–</p>
+        <span class="alcohol-tag" id="alcohol-tag" hidden>🥃 Enthält Alkohol – nur für Erwachsene</span>
+
+        <div class="stats">
+          <span class="stat"><span class="e">⏱</span><span id="stat-time">–</span></span>
+          <span class="stat"><span class="e">📶</span><span id="stat-difficulty">–</span></span>
+          <span class="stat"><span class="e">☕</span><span id="stat-portions">–</span></span>
+        </div>
+
+        <div class="section-title"><span class="e">🫘</span>Zutaten</div>
+        <ul class="ingredients" id="ingredients"></ul>
+
+        <div class="section-title"><span class="e">📋</span>Zubereitung</div>
+        <ol class="steps" id="steps"></ol>
+
+        <div class="tip-box">
+          <span class="e">💡</span>
+          <div class="txt"><b>Kaffee-Tipp</b><p id="tip">–</p></div>
+        </div>
+
+        <a class="shop-link" id="shop-link" href="#" target="_blank" rel="noopener">
+          <span class="txt">Kaffee für dieses Rezept entdecken<small>LeNoKo Shop</small></span>
+          <span class="arrow">→</span>
+        </a>
+
+        <div class="actions">
+          <button class="btn fav" id="fav-btn">♡ Speichern</button>
+          <button class="btn" id="share-btn">↗ Teilen</button>
+          <button class="btn" id="refresh-btn">⟳ Anderes</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-archiv" hidden>
+    <div class="search-box"><span>🔍</span><input type="text" id="search-input" placeholder="Rezept, Methode oder Bohne suchen…" /></div>
+    <div id="archiv-list"></div>
+  </section>
+
+  <section id="view-favoriten" hidden>
+    <div id="favoriten-list"></div>
+    <p class="empty" id="favoriten-empty" hidden>Noch keine Favoriten – tippe beim Rezept des Tages auf „Speichern".</p>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<nav class="tabbar">
+  <div class="inner">
+    <button class="tab active" data-view="heute"><span class="emoji">☕</span>Heute</button>
+    <button class="tab" data-view="archiv"><span class="emoji">📚</span>Archiv</button>
+    <button class="tab" data-view="favoriten"><span class="emoji">❤️</span>Favoriten</button>
+  </div>
+</nav>
+
+<script>
+  const RECIPES = [
+    { id:"cappuccino", method:"Klassische Kaffeegetränke", icon:"espresso", title:"Cappuccino", subtitle:"Der italienische Klassiker.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot (ca. 30 ml)"},{n:"Milch, aufgeschäumt",a:"100 ml"}],
+      steps:["Espresso frisch zubereiten und in eine Tasse geben.","Milch feinporig aufschäumen.","Milchschaum über den Espresso geben."],
+      tip:"Für feinporigen Schaum die Milch nicht zu heiß aufschäumen (ca. 60 °C).", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"latte", method:"Klassische Kaffeegetränke", icon:"espresso", title:"Caffè Latte", subtitle:"Mild, milchig, alltagstauglich.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"}],
+      steps:["Espresso zubereiten.","Milch cremig aufschäumen – seidiger Mikroschaum ist das Ziel.","Milch langsam über den Espresso gießen."],
+      tip:"Besonders cremig mit seidigem Mikroschaum.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"flatwhite", method:"Klassische Kaffeegetränke", icon:"espresso", title:"Flat White", subtitle:"Kräftig und kaffeebetont.", time:"3 Min.", difficulty:"Mittel", portions:"1 Portion",
+      ingredients:[{n:"Espresso, doppelt",a:"2 Shots"},{n:"Milch, feinporig",a:"ca. 120 ml"}],
+      steps:["Doppelten Espresso zubereiten.","Milch feinporig und dicht aufschäumen.","Milch über den Espresso gießen."],
+      tip:"Kräftiger und kaffeebetonter als ein Latte.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"macchiato", method:"Klassische Kaffeegetränke", icon:"espresso", title:"Espresso Macchiato", subtitle:"Espresso mit einem Hauch Milde.", time:"2 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milchschaum",a:"kleiner Klecks"}],
+      steps:["Espresso zubereiten.","Einen kleinen Klecks Milchschaum obenauf setzen."],
+      tip:"Perfekt für alle, die Espresso lieben, aber etwas Milde möchten.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"espressotonic", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Tonic", subtitle:"Frisch, spritzig, für warme Tage.", time:"5 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Tonic Water",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Orangenzeste",a:"1 Stück"}],
+      steps:["Glas mit Eiswürfeln füllen.","Tonic Water eingießen.","Espresso frisch zubereiten und vorsichtig darüber gießen.","Mit Orangenzeste garnieren."],
+      tip:"Ein fruchtiger, heller Espresso bringt die Aromen im Tonic besonders gut zur Geltung.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"espressoorange", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Orange", subtitle:"Fruchtig-frischer Espresso-Mix.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Orangensaft",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"}],
+      steps:["Glas mit Eis füllen.","Orangensaft eingießen.","Espresso darüber laufen lassen."],
+      tip:"Einen fruchtigen Espresso verwenden.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"espressosunrise", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Sunrise", subtitle:"Schichten wie ein Sonnenaufgang.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Orangensaft",a:"150 ml"},{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"}],
+      steps:["Glas mit Eis und Orangensaft füllen.","Espresso langsam über den Saft laufen lassen, sodass sich Schichten bilden.","Ohne Umrühren servieren."],
+      tip:"Der Sunrise-Effekt entsteht durch das langsame Übergießen.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"affogato", method:"Besondere Espresso-Rezepte", icon:"espresso", title:"Affogato", subtitle:"Dessert und Kaffee in einem.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Vanilleeis",a:"1 Kugel"},{n:"Espresso",a:"1 Shot"}],
+      steps:["Eine Kugel Vanilleeis in eine Schale geben.","Espresso frisch zubereiten.","Espresso direkt über das Eis gießen und sofort servieren."],
+      tip:"Am besten mit einem kräftigen, leicht bitteren Espresso.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"icedlatte", method:"Iced Coffee", icon:"coldbrew", title:"Iced Latte", subtitle:"Der Latte, kalt serviert.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Milch, kalt",a:"180 ml"}],
+      steps:["Glas mit Eiswürfeln füllen.","Kalte Milch eingießen.","Espresso darüber gießen."],
+      tip:"Für mehr Süße einen Schuss Sirup ergänzen.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"icedcappuccino", method:"Iced Coffee", icon:"coldbrew", title:"Iced Cappuccino", subtitle:"Cappuccino, eisgekühlt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Milch, kalt",a:"100 ml"},{n:"Milchschaum",a:"etwas"}],
+      steps:["Glas mit Eis füllen.","Kalte Milch eingießen, Espresso dazugeben.","Mit etwas Milchschaum abschließen."],
+      tip:"Schmeckt besonders gut mit einer kräftigeren Röstung.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"icedamericano", method:"Iced Coffee", icon:"coldbrew", title:"Iced Americano", subtitle:"Schlicht, kalt, koffeinhaltig.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Wasser, kalt",a:"150 ml"}],
+      steps:["Glas mit Eiswürfeln füllen.","Kaltes Wasser eingießen.","Espresso darüber gießen."],
+      tip:"Ein klassischer, unkomplizierter Wachmacher für warme Tage.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"coldbrew", method:"Iced Coffee", icon:"coldbrew", title:"Cold Brew", subtitle:"Sanft, süß, lange gezogen.", time:"12–16 Std.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Kaffee, grob gemahlen",a:"100 g"},{n:"Wasser, kalt",a:"800–1000 ml"}],
+      steps:["Kaffee grob mahlen und mit kaltem Wasser übergießen.","12–16 Stunden im Kühlschrank ziehen lassen.","Durch ein feines Sieb oder Filter abseihen."],
+      tip:"Verhältnis etwa 1:8 bis 1:10 als trinkfertiger Cold Brew.", shopUrl:"https://lenoko.de/collections/alle-kaffees" },
+    { id:"mocha", method:"Kaffee & Dessert", icon:"espresso", title:"Café Mocha", subtitle:"Kaffee trifft Schokolade.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Schokolade",a:"20 g"},{n:"Milch",a:"150 ml"},{n:"Milchschaum",a:"etwas"}],
+      steps:["Schokolade im heißen Espresso auflösen.","Milch cremig aufschäumen.","Milch über die Espresso-Schoko-Mischung gießen."],
+      tip:"Dunkle Schokolade sorgt für ein intensiveres Aroma.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"icedmocha", method:"Kaffee & Dessert", icon:"coldbrew", title:"Iced Mocha", subtitle:"Mocha, eisgekühlt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Schokoladensauce",a:"20 ml"},{n:"Milch, kalt",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"}],
+      steps:["Schokoladensauce ins Glas geben.","Eiswürfel und kalte Milch hinzufügen.","Espresso darüber gießen und leicht umrühren."],
+      tip:"Für Kinder oder ohne Koffein einfach durch kalten Kakao ersetzen.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"frappe", method:"Kaffee & Dessert", icon:"coldbrew", title:"Coffee Frappé", subtitle:"Cremig-eisig gemixt.", time:"5 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Kaffee, stark",a:"1 Tasse"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Milch",a:"100 ml"},{n:"Zucker/Sirup",a:"optional"}],
+      steps:["Kaffee, Eis und Milch in einen Mixer geben.","Kräftig mixen, bis eine schaumige Konsistenz entsteht.","In ein Glas füllen und sofort servieren."],
+      tip:"Nach Belieben mit etwas Sirup süßen.", shopUrl:"https://lenoko.de/collections/alle-kaffees" },
+    { id:"schokoespresso", method:"Kaffee & Dessert", icon:"espresso", title:"Schoko-Espresso", subtitle:"Kaffee mit Schokoladenkick.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Dunkle Schokolade",a:"15 g"}],
+      steps:["Espresso frisch zubereiten.","Schokolade im heißen Espresso auflösen.","Gut umrühren und servieren."],
+      tip:"Je dunkler die Schokolade, desto intensiver das Aroma.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"zimtlatte", method:"Kaffee mal anders", icon:"espresso", title:"Zimt Latte", subtitle:"Warm gewürzt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Zimt",a:"1 Prise"},{n:"Honig",a:"optional, 1 TL"}],
+      steps:["Espresso zubereiten.","Milch aufschäumen und mit Zimt verrühren.","Über den Espresso gießen, optional mit Honig süßen."],
+      tip:"Zimt erst kurz vor dem Servieren zugeben, damit das Aroma frisch bleibt.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"honiglatte", method:"Kaffee mal anders", icon:"espresso", title:"Honig Latte", subtitle:"Sanft gesüßt.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Honig",a:"1 TL"}],
+      steps:["Espresso zubereiten.","Honig im heißen Espresso auflösen.","Aufgeschäumte Milch dazugeben."],
+      tip:"Milder Honig lässt das Kaffeearoma weiterhin durchkommen.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"kardamom", method:"Kaffee mal anders", icon:"dripper", title:"Kardamom Kaffee", subtitle:"Orientalisch gewürzt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Filterkaffee oder Espresso",a:"1 Tasse"},{n:"Kardamom",a:"1 Prise"}],
+      steps:["Kaffee wie gewohnt zubereiten.","Eine kleine Prise Kardamom einrühren.","Kurz ziehen lassen und servieren."],
+      tip:"Eine kleine Prise reicht – Kardamom ist intensiv.", shopUrl:"https://lenoko.de/collections/filterkaffee" },
+    { id:"coconuticed", method:"Kaffee mal anders", icon:"coldbrew", title:"Coconut Iced Coffee", subtitle:"Tropisch-kühl.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Kokosdrink",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"}],
+      steps:["Glas mit Eis füllen.","Kokosdrink eingießen.","Espresso darüber gießen."],
+      tip:"Ungesüßter Kokosdrink lässt die Kaffeenoten am besten durchkommen.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"bombon", method:"Kaffee aus aller Welt", icon:"espresso", title:"Café Bombón", subtitle:"Spanische Süße.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Gesüßte Kondensmilch",a:"30 ml"}],
+      steps:["Kondensmilch ins Glas geben.","Espresso langsam darüber gießen, sodass sich Schichten bilden.","Vor dem Trinken umrühren."],
+      tip:"Schichtweise ins Glas geben, für den typischen Bombón-Look.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"greekfrappe", method:"Kaffee aus aller Welt", icon:"coldbrew", title:"Greek Frappé", subtitle:"Griechisch, schaumig, kalt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Instantkaffee",a:"2 TL"},{n:"Wasser, kalt",a:"50 ml"},{n:"Eiswürfel",a:"nach Bedarf"}],
+      steps:["Instantkaffee mit wenig kaltem Wasser kräftig aufschäumen (Schneebesen oder Shaker).","In ein Glas mit Eiswürfeln geben.","Bei Bedarf mit Wasser auffüllen."],
+      tip:"Aufschäumen und mit Eis servieren.", shopUrl:"https://lenoko.de/collections/alle-kaffees" },
+    { id:"wienerkaffee", method:"Kaffee aus aller Welt", icon:"moka", title:"Wiener Kaffee", subtitle:"Österreichische Klassik.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso oder kräftiger Kaffee",a:"1 Tasse"},{n:"Schlagsahne",a:"30 ml"}],
+      steps:["Kaffee oder Espresso zubereiten.","Mit einer Haube Schlagsahne toppen.","Ohne Umrühren servieren."],
+      tip:"Die Sahne sollte nicht zu weich geschlagen sein, damit sie oben bleibt.", shopUrl:"https://lenoko.de/collections/kraeftig" },
+    { id:"irishcoffee", method:"Kaffee aus aller Welt", icon:"moka", title:"Irish Coffee", subtitle:"Kaffee mit Wärme von innen.", time:"5 Min.", difficulty:"Mittel", portions:"1 Portion", alcohol:true,
+      ingredients:[{n:"Kaffee, kräftig",a:"150 ml"},{n:"Whiskey",a:"4 cl"},{n:"Zucker",a:"1 TL"},{n:"Sahne",a:"30 ml"}],
+      steps:["Zucker im heißen Kaffee auflösen.","Whiskey dazugeben und verrühren.","Leicht geschlagene Sahne vorsichtig darüber gießen."],
+      tip:"Enthält Alkohol – für eine kommerzielle App separat kennzeichnen und nicht an Minderjährige ausschenken.", shopUrl:"https://lenoko.de/collections/kraeftig" },
+    { id:"pumpkinspice", method:"Saisonale Rezepte", icon:"espresso", title:"Pumpkin Spice Latte", subtitle:"Herbstlicher Klassiker.", time:"6 Min.", difficulty:"Mittel", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Kürbispüree",a:"2 EL"},{n:"Zimt, Muskat, Ingwer",a:"je 1 Prise"}],
+      steps:["Kürbispüree mit den Gewürzen kurz erwärmen.","Espresso zubereiten und mit der Kürbismischung verrühren.","Aufgeschäumte Milch dazugeben."],
+      tip:"Passt besonders gut zu einer milden, süßlichen Röstung.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"lebkuchenlatte", method:"Saisonale Rezepte", icon:"espresso", title:"Lebkuchen Latte", subtitle:"Weihnachtlich gewürzt.", time:"5 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Lebkuchengewürz",a:"1 Prise"},{n:"Honig",a:"optional, 1 TL"}],
+      steps:["Espresso zubereiten.","Milch mit Lebkuchengewürz aufschäumen.","Über den Espresso gießen, nach Wunsch mit Honig süßen."],
+      tip:"Ideal mit einer würzigen, dunkleren Röstung.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"carameliced", method:"Saisonale Rezepte", icon:"coldbrew", title:"Caramel Iced Latte", subtitle:"Süß, kalt, karamellig.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Karamellsirup",a:"2 cl"}],
+      steps:["Karamellsirup ins Glas geben.","Eiswürfel und Milch dazugeben.","Espresso darüber gießen."],
+      tip:"Für Karamell-Fans: extra Sirup als Topping.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"vanillelatte", method:"Saisonale Rezepte", icon:"espresso", title:"Vanille Latte", subtitle:"Mild und aromatisch.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milch",a:"180 ml"},{n:"Vanillesirup",a:"2 cl"}],
+      steps:["Vanillesirup in die Tasse geben.","Espresso zubereiten und dazugeben.","Aufgeschäumte Milch eingießen."],
+      tip:"Echte Vanilleschote statt Sirup bringt ein feineres Aroma.", shopUrl:"https://lenoko.de/collections/espresso" },
+    { id:"winterspice", method:"Saisonale Rezepte", icon:"dripper", title:"Winter Spice Coffee", subtitle:"Winterlich gewürzter Filterkaffee.", time:"6 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Filterkaffee",a:"1 Tasse"},{n:"Zimtstange",a:"1 Stück"},{n:"Orangenschale",a:"1 Stück"},{n:"Nelken",a:"2 Stück"}],
+      steps:["Filterkaffee wie gewohnt zubereiten.","Gewürze kurz im heißen Kaffee ziehen lassen.","Gewürze entfernen und servieren."],
+      tip:"Die Gewürze nicht zu lange ziehen lassen, sonst wird es bitter.", shopUrl:"https://lenoko.de/collections/filterkaffee" },
+    { id:"eiskaffee", method:"Saisonale Rezepte", icon:"coldbrew", title:"Eiskaffee", subtitle:"Der deutsche Café-Klassiker.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion",
+      ingredients:[{n:"Vanilleeis",a:"1 Kugel"},{n:"Kaffee, kalt",a:"150 ml"},{n:"Sahne",a:"optional, 30 ml"}],
+      steps:["Kalten Kaffee in ein Glas geben.","Eine Kugel Vanilleeis hinzufügen.","Nach Wunsch mit Sahne toppen."],
+      tip:"Am besten mit kräftigem Filterkaffee.", shopUrl:"https://lenoko.de/collections/filterkaffee" }
+  ];
+
+  const FAV_KEY = "lenoko_kdt_favoriten";
+  const getFavs = () => JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
+  const setFavs = (arr) => localStorage.setItem(FAV_KEY, JSON.stringify(arr));
+  const isFav = (id) => getFavs().includes(id);
+  function toggleFav(id) {
+    let favs = getFavs();
+    favs = favs.includes(id) ? favs.filter(f => f !== id) : [...favs, id];
+    setFavs(favs);
+    return favs.includes(id);
+  }
+
+  function dayIndex() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    return Math.floor((now - start) / 86400000);
+  }
+  let todayIndex = dayIndex() % RECIPES.length;
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._h);
+    showToast._h = setTimeout(() => t.classList.remove("show"), 1800);
+  }
+
+  function renderToday(index) {
+    const r = RECIPES[index];
+    document.getElementById("category").textContent = r.method;
+    document.getElementById("title").textContent = r.title;
+    document.getElementById("subtitle").textContent = r.subtitle;
+    document.getElementById("alcohol-tag").hidden = !r.alcohol;
+    const heroImg = document.getElementById("illustration");
+    heroImg.alt = r.method;
+    heroImg.classList.remove("is-photo");
+    heroImg.onerror = () => {
+      heroImg.onerror = null;
+      heroImg.classList.remove("is-photo");
+      heroImg.src = `img/${r.icon}.png`;
+    };
+    heroImg.onload = () => {
+      if (heroImg.src.includes("/photos/")) heroImg.classList.add("is-photo");
+    };
+    heroImg.src = `img/photos/${r.id}.jpg`;
+    document.getElementById("stat-time").textContent = r.time;
+    document.getElementById("stat-difficulty").textContent = r.difficulty;
+    document.getElementById("stat-portions").textContent = r.portions;
+
+    const ing = document.getElementById("ingredients");
+    ing.innerHTML = r.ingredients.map(i => `<li><span>${i.n}</span><span class="amount">${i.a}</span></li>`).join("");
+
+    const steps = document.getElementById("steps");
+    steps.innerHTML = r.steps.map((s, i) => `<li><span class="num">${i+1}</span><span>${s}</span></li>`).join("");
+
+    document.getElementById("tip").textContent = r.tip;
+    document.getElementById("shop-link").href = r.shopUrl;
+
+    const favBtn = document.getElementById("fav-btn");
+    favBtn.classList.toggle("active", isFav(r.id));
+    favBtn.textContent = isFav(r.id) ? "♥ Gespeichert" : "♡ Speichern";
+    favBtn.dataset.id = r.id;
+  }
+
+  document.getElementById("fav-btn").addEventListener("click", (e) => {
+    const id = e.currentTarget.dataset.id;
+    const active = toggleFav(id);
+    e.currentTarget.classList.toggle("active", active);
+    e.currentTarget.textContent = active ? "♥ Gespeichert" : "♡ Speichern";
+    showToast(active ? "Zu Favoriten hinzugefügt" : "Von Favoriten entfernt");
+  });
+
+  document.getElementById("refresh-btn").addEventListener("click", () => {
+    let next = Math.floor(Math.random() * RECIPES.length);
+    if (next === todayIndex) next = (next + 1) % RECIPES.length;
+    todayIndex = next;
+    renderToday(todayIndex);
+  });
+
+  document.getElementById("share-btn").addEventListener("click", async () => {
+    const r = RECIPES[todayIndex];
+    const text = `☕ Kaffeerezept des Tages: ${r.title} (${r.method}) – ${r.subtitle} Von LeNoKo.`;
+    if (navigator.share) {
+      try { await navigator.share({ title: "Kaffee des Tages", text, url: r.shopUrl }); }
+      catch (e) {}
+    } else {
+      try { await navigator.clipboard.writeText(`${text} ${r.shopUrl}`); showToast("In Zwischenablage kopiert"); }
+      catch (e) { showToast("Teilen nicht verfügbar"); }
+    }
+  });
+
+  function renderList(container, recipes, emptyMsg) {
+    container.innerHTML = "";
+    if (recipes.length === 0) {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = emptyMsg;
+      container.appendChild(p);
+      return;
+    }
+    recipes.forEach(r => {
+      const item = document.createElement("div");
+      item.className = "list-item";
+      item.innerHTML = `
+        <div class="thumb"><img src="img/${r.icon}.png" alt="${r.method}" /></div>
+        <div class="meta">
+          <div class="name">${r.title}${r.alcohol ? " 🥃" : ""}</div>
+          <div class="method">${r.method}</div>
+        </div>
+        <button class="heart ${isFav(r.id) ? "active" : ""}" data-id="${r.id}">${isFav(r.id) ? "♥" : "♡"}</button>
+      `;
+      item.addEventListener("click", (e) => {
+        if (e.target.closest(".heart")) return;
+        todayIndex = RECIPES.findIndex(x => x.id === r.id);
+        renderToday(todayIndex);
+        switchView("heute");
+      });
+      item.querySelector(".heart").addEventListener("click", (e) => {
+        e.stopPropagation();
+        const active = toggleFav(r.id);
+        e.currentTarget.classList.toggle("active", active);
+        e.currentTarget.textContent = active ? "♥" : "♡";
+        if (document.getElementById("view-favoriten").hidden === false) renderFavoriten();
+      });
+      container.appendChild(item);
+    });
+  }
+
+  function renderArchiv(filter = "") {
+    const q = filter.trim().toLowerCase();
+    const filtered = RECIPES.filter(r =>
+      !q || r.title.toLowerCase().includes(q) || r.method.toLowerCase().includes(q) || r.tip.toLowerCase().includes(q)
+    );
+    renderList(document.getElementById("archiv-list"), filtered, "Keine Rezepte gefunden.");
+  }
+
+  document.getElementById("search-input").addEventListener("input", (e) => renderArchiv(e.target.value));
+
+  function renderFavoriten() {
+    const favs = getFavs();
+    const recipes = RECIPES.filter(r => favs.includes(r.id));
+    renderList(document.getElementById("favoriten-list"), recipes, "");
+    document.getElementById("favoriten-empty").hidden = recipes.length > 0;
+  }
+
+  function switchView(view) {
+    ["heute","archiv","favoriten"].forEach(v => {
+      document.getElementById(`view-${v}`).hidden = v !== view;
+    });
+    document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.view === view));
+    if (view === "archiv") renderArchiv(document.getElementById("search-input").value);
+    if (view === "favoriten") renderFavoriten();
+  }
+  document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => switchView(b.dataset.view)));
+
+  renderToday(todayIndex);
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+</script>
+
+</body>
+</html>
