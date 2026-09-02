@@ -1,4 +1,4 @@
-const CACHE = "kaffee-des-tages-v1";
+const CACHE = "kaffee-des-tages-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -34,13 +34,33 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        if (response.ok && event.request.url.includes("/img/")) {
+  const req = event.request;
+  const isHtmlPage =
+    req.mode === "navigate" ||
+    (req.method === "GET" && (req.headers.get("accept") || "").includes("text/html"));
+
+  if (isHtmlPage) {
+    // HTML-Seiten: immer zuerst frisch vom Netz laden, Cache nur als Offline-Fallback.
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          caches.open(CACHE).then((cache) => cache.put(req, copy));
+          return response;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Bilder & sonstige Assets: weiterhin schnell aus dem Cache, sonst vom Netz nachladen.
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+      return fetch(req).then((response) => {
+        if (response.ok && req.url.includes("/img/")) {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(req, copy));
         }
         return response;
       }).catch(() => cached);
