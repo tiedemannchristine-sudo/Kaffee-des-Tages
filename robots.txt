@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kaffee-des-tages.lenoko.de/sitemap.xml
