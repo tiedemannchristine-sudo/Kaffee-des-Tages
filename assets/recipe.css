@@ -27,6 +27,7 @@
   .hero img { width: 42%; max-width:170px; opacity:0.92; }
   .hero img.is-photo { width:100%; height:100%; max-width:none; object-fit:cover; opacity:1; }
   .badge { position:absolute; top:14px; left:14px; background:var(--badge-bg); color:var(--badge-text); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:7px 12px; border-radius:999px; }
+  .ai-badge { position:absolute; bottom:10px; right:10px; background:rgba(46,32,19,0.72); color:#F6EFE2; font-size:9.5px; font-weight:600; letter-spacing:0.03em; padding:5px 9px; border-radius:999px; display:flex; align-items:center; gap:4px; }
 
   .body { padding: 18px 20px 22px; }
 
@@ -74,6 +75,7 @@
   .list-item { display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding: 10px 12px; margin-bottom:10px; cursor:pointer; }
   .list-item .thumb { width:48px; height:48px; border-radius:10px; background: linear-gradient(135deg, #EFDFC4, #DEBF95); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .list-item .thumb img { width:28px; height:28px; }
+  .list-item .thumb img.is-photo { width:100%; height:100%; object-fit:cover; border-radius:10px; }
   .list-item .meta { flex:1; min-width:0; }
   .list-item .meta .name { font-family:'Fraunces', Georgia, serif; font-weight:700; font-size:15px; margin-bottom:2px; }
   .list-item .meta .method { font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-muted); }
