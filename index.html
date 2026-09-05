@@ -196,7 +196,7 @@
     { id:"macchiato", method:"Klassische Kaffeegetränke", icon:"espresso", title:"Espresso Macchiato", subtitle:"Espresso mit einem Hauch Milde.", time:"2 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Milchschaum",a:"kleiner Klecks"}], steps:["Espresso zubereiten.","Einen kleinen Klecks Milchschaum obenauf setzen."], tip:"Pur am besten mit dem Linzer Espresso – kräftig, dunkel, mit schöner Crema.", shopUrl:"https://lenoko.de/products/espresso-amerika-trifft-indien" },
     { id:"espressotonic", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Tonic", subtitle:"Frisch, spritzig, für warme Tage.", time:"5 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Tonic Water",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Orangenzeste",a:"1 Stück"}], steps:["Glas mit Eiswürfeln füllen.","Tonic Water eingießen.","Espresso frisch zubereiten und vorsichtig darüber gießen.","Mit Orangenzeste garnieren."], tip:"Der Aurum Noctis mit seinen fruchtig-malzigen Noten harmoniert besonders gut mit Tonic Water.", shopUrl:"https://lenoko.de/products/kopie-espresso-peru-trifft-indien" },
     { id:"espressoorange", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Orange", subtitle:"Fruchtig-frischer Espresso-Mix.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Orangensaft",a:"150 ml"},{n:"Eiswürfel",a:"nach Bedarf"}], steps:["Glas mit Eis füllen.","Orangensaft eingießen.","Espresso darüber laufen lassen."], tip:"Die fruchtigen Schokoladennoten von Mayas Rheingold passen gut zu Orange.", shopUrl:"https://lenoko.de/products/espresso-honduras-trifft-indien" },
-    { id:"espressosunrise", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Sunrise", subtitle:"Schichten wie ein Sonnenaufgang.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Orangensaft",a:"150 ml"},{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"}], steps:["Glas mit Eis und Orangensaft füllen.","Espresso langsam über den Saft laufen lassen, sodass sich Schichten bilden.","Ohne Umrühren servieren."], tip:"Peru trifft Indien bringt mit seiner Limettennote den passenden Citrus-Kick.", shopUrl:"https://lenoko.de/products/espresso-peru-trifft-indien" },
+    { id:"espressosunrise", method:"Besondere Espresso-Rezepte", icon:"coldbrew", title:"Espresso Sunrise", subtitle:"Schichten wie ein Sonnenaufgang – mit Granatapfelsirup.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Orangensaft",a:"100 ml"},{n:"Granatapfelsirup",a:"2 cl"},{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"}], steps:["Glas mit Eiswürfeln füllen.","Granatapfelsirup hineingeben – er sinkt zu Boden.","Orangensaft vorsichtig darübergießen.","Espresso langsam obenauf laufen lassen, sodass sich die Schichten bilden. Ohne Umrühren servieren."], tip:"Peru trifft Indien bringt mit seiner Limettennote den passenden Citrus-Kick. Granatapfelsirup kannst du ganz einfach selbst machen.", shopUrl:"https://lenoko.de/products/espresso-peru-trifft-indien" },
     { id:"affogato", method:"Besondere Espresso-Rezepte", icon:"espresso", title:"Affogato", subtitle:"Dessert und Kaffee in einem.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Vanilleeis",a:"1 Kugel"},{n:"Espresso",a:"1 Shot"}], steps:["Eine Kugel Vanilleeis in eine Schale geben.","Espresso frisch zubereiten.","Espresso direkt über das Eis gießen und sofort servieren."], tip:"Der kräftige, dunkle Linzer Espresso ist unser Klassiker für Affogato.", shopUrl:"https://lenoko.de/products/espresso-amerika-trifft-indien" },
     { id:"icedlatte", method:"Iced Coffee", icon:"coldbrew", title:"Iced Latte", subtitle:"Der Latte, kalt serviert.", time:"3 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Milch, kalt",a:"180 ml"}], steps:["Glas mit Eiswürfeln füllen.","Kalte Milch eingießen.","Espresso darüber gießen."], tip:"Peru trifft Indien ist unser Latte-Favorit – süß, mit Karamell- und Marzipan-Aromen.", shopUrl:"https://lenoko.de/products/espresso-peru-trifft-indien" },
     { id:"icedcappuccino", method:"Iced Coffee", icon:"coldbrew", title:"Iced Cappuccino", subtitle:"Cappuccino, eisgekühlt.", time:"4 Min.", difficulty:"Einfach", portions:"1 Portion", ingredients:[{n:"Espresso",a:"1 Shot"},{n:"Eiswürfel",a:"nach Bedarf"},{n:"Milch, kalt",a:"100 ml"},{n:"Milchschaum",a:"etwas"}], steps:["Glas mit Eis füllen.","Kalte Milch eingießen, Espresso dazugeben.","Mit etwas Milchschaum abschließen."], tip:"Der Linzer Espresso liefert auch eisgekühlt die nötige Kräftigkeit.", shopUrl:"https://lenoko.de/products/espresso-amerika-trifft-indien" },
@@ -568,12 +568,35 @@
     return favs.includes(id);
   }
 
+  const WINTER_IDS = new Set(["pumpkinspice", "lebkuchenlatte", "winterspice", "winterwarmer", "zimtstern-latte-sirup", "apfelzimt-latte-sirup", "bratapfel-latte-sirup", "winterkirsch-latte-sirup", "winterminze-latte-sirup", "maronikastanie-latte-sirup", "mandelzimt-latte-sirup", "punschgewuerz-latte-sirup", "kuerbiskern-latte-sirup", "spekulatius-latte-sirup", "nikolausschokonuss-latte-sirup", "zimtstern-cappuccino-sirup", "apfelzimt-cappuccino-sirup", "bratapfel-cappuccino-sirup", "winterkirsch-cappuccino-sirup"]);
+
+  function getSeason(date = new Date()) {
+    const m = date.getMonth(); // 0 = Januar
+    if (m >= 4 && m <= 8) return "summer";   // Mai - September
+    if (m === 10 || m === 11 || m === 0 || m === 1) return "winter"; // Nov - Feb
+    return null; // Maerz, April, Oktober: keine Saison-Einschraenkung
+  }
+
+  function seasonalPool() {
+    const season = getSeason();
+    if (!season) return RECIPES.map((_, i) => i);
+    return RECIPES.reduce((acc, r, i) => {
+      const isIced = r.method === "Iced Coffee";
+      const isWinter = WINTER_IDS.has(r.id);
+      if (season === "summer" && isWinter) return acc;
+      if (season === "winter" && isIced) return acc;
+      acc.push(i);
+      return acc;
+    }, []);
+  }
+
   function dayIndex() {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);
     return Math.floor((now - start) / 86400000);
   }
-  let todayIndex = dayIndex() % RECIPES.length;
+  let seasonPool = seasonalPool();
+  let todayIndex = seasonPool[dayIndex() % seasonPool.length];
 
   function showToast(msg) {
     const t = document.getElementById("toast");
@@ -635,8 +658,10 @@
   });
 
   document.getElementById("refresh-btn").addEventListener("click", () => {
-    let next = Math.floor(Math.random() * RECIPES.length);
-    if (next === todayIndex) next = (next + 1) % RECIPES.length;
+    const pool = seasonalPool();
+    let pos = Math.floor(Math.random() * pool.length);
+    let next = pool[pos];
+    if (next === todayIndex) next = pool[(pos + 1) % pool.length];
     todayIndex = next;
     renderToday(todayIndex);
   });
