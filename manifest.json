@@ -1,6 +1,6 @@
 {
   "name": "Kaffee des Tages",
-  "short_name": "Kaffee",
+  "short_name": "Kaffeerezepte",
   "description": "Jeden Tag ein neues Kaffeerezept",
   "start_url": "./index.html",
   "scope": "./",
