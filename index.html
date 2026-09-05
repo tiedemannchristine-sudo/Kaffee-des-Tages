@@ -42,6 +42,7 @@
   .hero img { width: 42%; max-width:170px; opacity:0.92; }
   .hero img.is-photo { width:100%; height:100%; max-width:none; object-fit:cover; opacity:1; }
   .badge { position:absolute; top:14px; left:14px; background:var(--badge-bg); color:var(--badge-text); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:7px 12px; border-radius:999px; }
+  .ai-badge { position:absolute; bottom:10px; right:10px; background:rgba(46,32,19,0.72); color:#F6EFE2; font-size:9.5px; font-weight:600; letter-spacing:0.03em; padding:5px 9px; border-radius:999px; display:flex; align-items:center; gap:4px; }
 
   .body { padding: 18px 20px 22px; }
 
@@ -122,6 +123,7 @@
       <div class="hero">
         <span class="badge">Rezept des Tages</span>
         <img id="illustration" src="" alt="" />
+        <span class="ai-badge" id="ai-badge" hidden>✨ KI-generiertes Bild</span>
       </div>
       <div class="body">
         <p class="category" id="category">–</p>
@@ -586,13 +588,17 @@
     const heroImg = document.getElementById("illustration");
     heroImg.alt = r.method;
     heroImg.classList.remove("is-photo");
+    const aiBadge = document.getElementById("ai-badge");
     heroImg.onerror = () => {
       heroImg.onerror = null;
       heroImg.classList.remove("is-photo");
+      if (aiBadge) aiBadge.hidden = true;
       heroImg.src = `img/${r.icon}.png`;
     };
     heroImg.onload = () => {
-      if (heroImg.src.includes("/photos/")) heroImg.classList.add("is-photo");
+      const isPhoto = heroImg.src.includes("/photos/");
+      if (isPhoto) heroImg.classList.add("is-photo");
+      if (aiBadge) aiBadge.hidden = !isPhoto;
     };
     heroImg.src = `img/photos/${r.id}.jpg`;
     document.getElementById("stat-time").textContent = r.time;
