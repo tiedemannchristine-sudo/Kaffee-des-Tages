@@ -72,6 +72,8 @@
   .tip-box .e { font-size:20px; line-height:1; }
   .tip-box .txt b { display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px; color:var(--ink); }
   .tip-box .txt p { margin:0; font-size:13.5px; color:var(--ink-muted); line-height:1.5; }
+  .syrup-link { margin: -8px 0 18px; font-size:13px; }
+  .syrup-link a { color:var(--accent); font-weight:600; text-decoration:none; }
 
   .shop-link { display:flex; align-items:center; justify-content:space-between; gap:10px; text-decoration:none; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:18px; }
   .shop-link .txt { font-size:13.5px; color:var(--ink); font-weight:500; }
@@ -147,6 +149,8 @@
           <span class="e">💡</span>
           <div class="txt"><b>Kaffee-Tipp</b><p id="tip">–</p></div>
         </div>
+
+        <p class="syrup-link" id="syrup-link" hidden><a href="sirup-selbst-machen/index.html">Sirup einfach selbst machen →</a></p>
 
         <a class="shop-link" id="shop-link" href="#" target="_blank" rel="noopener">
           <span class="txt">Kaffee für dieses Rezept entdecken<small>LeNoKo Shop</small></span>
@@ -612,6 +616,8 @@
     steps.innerHTML = r.steps.map((s, i) => `<li><span class="num">${i+1}</span><span>${s}</span></li>`).join("");
 
     document.getElementById("tip").textContent = r.tip;
+    const syrupLink = document.getElementById("syrup-link");
+    if (syrupLink) syrupLink.hidden = !/-(latte-sirup|cappuccino-sirup|iced-latte-sirup)$/.test(r.id);
     document.getElementById("shop-link").href = r.shopUrl;
 
     const favBtn = document.getElementById("fav-btn");

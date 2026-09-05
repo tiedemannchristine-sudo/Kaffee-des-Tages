@@ -110,3 +110,11 @@ a.list-item { text-decoration:none; color:inherit; }
 .archive-group { margin-bottom:26px; }
 .archive-group h2 { font-family:'Fraunces', Georgia, serif; font-size:16px; font-weight:700; margin: 0 0 10px; padding-top: 6px; border-top: 1px solid var(--line); }
 .archive-list { display:flex; flex-direction:column; gap:10px; }
+
+/* --- added for Sirup-Guide page --- */
+.hero-emoji { font-size:72px; line-height:1; }
+.flavor-list { list-style:none; margin:0 0 20px; padding:0; }
+.flavor-list li { padding:9px 0; border-bottom:1px solid var(--line); font-size:13.5px; line-height:1.5; color:var(--ink-muted); }
+.flavor-list li:last-child { border-bottom:none; }
+.flavor-list b { color:var(--ink); }
+.tip-box .txt p a { color:var(--accent); font-weight:600; text-decoration:none; }
