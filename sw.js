@@ -1,4 +1,4 @@
-const CACHE = "kaffee-des-tages-v2";
+const CACHE = "kaffee-des-tages-v3";
 const ASSETS = [
   "./",
   "./index.html",
